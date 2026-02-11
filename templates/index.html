@@ -3,137 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Citas</title>
+    <title>Auditorías Alpharma 2026</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
-        .contenedor-principal { display: flex; max-width: 1200px; margin: 0 auto; gap: 30px; }
+        /* Fondo con degradado azul profesional */
+        body {
+            background: linear-gradient(135deg, #003366 0%, #0055aa 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card-container {
+            background: rgba(255, 255, 255, 0.98);
+            color: #333;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            max-width: 750px;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .btn-alpharma {
+            background-color: #004488;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-alpharma:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .hidden { display: none; }
         
-        /* Columna Izquierda: Calendario */
-        .columna-calendario { flex: 6; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .grid-calendario { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-        
-        /* Diseño de la Tarjeta de Fecha */
-        .tarjeta { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
-        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,51,102,0.2); }
-        .tarjeta.seleccionada { border: 2px solid #003366; background-color: #e6f0fa; }
-        .tarjeta .mes { background-color: #003366; color: white; font-weight: bold; padding: 8px 0; font-size: 14px; }
-        .tarjeta .dia { padding: 20px 0; font-size: 32px; font-weight: bold; color: #222; }
-        
-        /* Columna Derecha: Formulario */
-        .columna-formulario { flex: 4; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .grupo-form { margin-bottom: 15px; }
-        .grupo-form label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold; }
-        .grupo-form input, .grupo-form select, .grupo-form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { background-color: #003366; color: white; padding: 12px; width: 100%; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:hover { background-color: #002244; }
-        button:disabled { background-color: #aaa; cursor: not-allowed; }
-        #mensaje-fecha { color: #003366; font-weight: bold; margin-bottom: 20px; display: block; }
+        .logo-placeholder {
+            font-size: 24px;
+            font-weight: bold;
+            color: #004488;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-<div class="contenedor-principal">
-    <div class="columna-calendario">
-        <h2 style="color: #003366; margin-top: 0;">Selecciona una fecha</h2>
-        <div class="grid-calendario">
-            {% for item in fechas %}
-            <div class="tarjeta" data-fecha="{{ item.fecha }}" onclick="seleccionarFecha(this)">
-                <div class="mes"></div>
-                <div class="dia"></div>
+    <div class="card-container">
+        <div id="paso1" class="text-center">
+            <div class="logo-placeholder">AL PHARMA S.A.S</div>
+            <h2 class="mb-4" style="color: #003366; font-weight: 700;">Bienvenidos al Calendario de Auditorías Clientes Alpharma 2026</h2>
+            <p class="text-muted" style="line-height: 1.8; text-align: justify; font-size: 1.05rem;">
+                En <strong>AL PHARMA S.A.S</strong> somos sinónimo de esperanza de vida para nuestros pacientes, gracias a la calidad y seguridad de nuestros productos y servicios. 
+                Nuestra certificación en <strong>ISO 9001 e ISO 14001</strong>, junto con el reconocimiento ambiental distrital <strong>PREAD en la categoría Élite</strong>, 
+                reflejan nuestro compromiso con la excelencia, la sostenibilidad y la mejora continua. Estos logros nos diferencian en el mercado, generando confianza y valor para quienes más lo necesitan.
+            </p>
+            <div class="mt-5">
+                <button class="btn btn-alpharma" onclick="mostrarFormulario()">Comenzar Reserva</button>
             </div>
-            {% endfor %}
+        </div>
+
+        <div id="paso2" class="hidden">
+            <h3 class="text-center mb-4" style="color: #003366;">Formulario de Agendamiento</h3>
+            <form id="reservaForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nombre Completo</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Ej: Andres Rojas" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Correo Electrónico</label>
+                        <input type="email" id="correo" class="form-control" placeholder="cliente@alpharma.com.co" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Servicio</label>
+                        <select id="servicio" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Comercial">Comercial</option>
+                            <option value="Auditoria">Auditoría Calidad</option>
+                            <option value="Sostenibilidad">Sostenibilidad</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Fecha Disponible (8 AM - 12 PM)</label>
+                        <select id="fecha" class="form-select" required>
+                            <option value="">Cargando fechas...</option>
+                            {% for f in fechas %}
+                                <option value="{{ f.fecha }}">{{ f.fecha }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Modalidad</label>
+                    <select id="modalidad" class="form-select" required>
+                        <option value="Virtual">Virtual (Teams)</option>
+                        <option value="Presencial">Presencial</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Notas adicionales</label>
+                    <textarea id="notas" class="form-control" rows="2" placeholder="Opcional..."></textarea>
+                </div>
+
+                <button type="submit" id="btnSubmit" class="btn btn-alpharma w-100">Confirmar y Crear Reunión en Teams</button>
+                <div class="text-center mt-3">
+                    <a href="javascript:void(0)" onclick="volverInicio()" class="text-decoration-none text-muted small">← Volver al inicio</a>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="columna-formulario">
-        <h2 style="color: #003366; margin-top: 0;">Detalles de la Cita</h2>
-        <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
-        
-        <form id="formulario-reserva">
-            <input type="hidden" id="fechaElegida" required>
-
-            <div class="grupo-form"><label>Nombre Completo *</label><input type="text" id="nombre" required></div>
-            <div class="grupo-form"><label>Correo Electrónico *</label><input type="email" id="correo" required></div>
-            <div class="grupo-form"><label>Teléfono</label><input type="text" id="telefono"></div>
-            
-            <div style="display: flex; gap: 10px;">
-                <div class="grupo-form" style="flex: 1;">
-                    <label>Modalidad *</label>
-                    <select id="modalidad" required><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option></select>
-                </div>
-                <div class="grupo-form" style="flex: 1;">
-                    <label>Servicio *</label>
-                    <select id="servicio" required><option value="Comercial">Comercial</option><option value="CM">CM</option><option value="SICM">SICM</option></select>
-                </div>
-            </div>
-
-            <div class="grupo-form"><label>Cargo</label><input type="text" id="cargo"></div>
-            <div class="grupo-form"><label>Comentarios</label><textarea id="notas" rows="3"></textarea></div>
-
-            <button type="submit" id="btnGuardar" disabled>Confirmar Reserva</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    // 1. Darle formato bonito a las fechas al cargar la página
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    
-    document.querySelectorAll('.tarjeta').forEach(tarjeta => {
-        const fechaStr = tarjeta.getAttribute('data-fecha');
-        const partes = fechaStr.split('-'); // [AÑO, MES, DIA]
-        const mesIndex = parseInt(partes[1]) - 1;
-        
-        tarjeta.querySelector('.mes').innerText = meses[mesIndex].toUpperCase();
-        tarjeta.querySelector('.dia').innerText = partes[2];
-    });
-
-    // 2. Lógica al hacer clic en una fecha
-    function seleccionarFecha(elemento) {
-        // Quitar selección a las demás
-        document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
-        // Seleccionar la actual
-        elemento.classList.add('seleccionada');
-        
-        const fechaElegida = elemento.getAttribute('data-fecha');
-        document.getElementById('fechaElegida').value = fechaElegida;
-        document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-        document.getElementById('btnGuardar').disabled = false;
-    }
-
-    // 3. Enviar los datos a Python al guardar
-    document.getElementById('formulario-reserva').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('btnGuardar');
-        btn.innerText = "Guardando..."; btn.disabled = true;
-
-        const datos = {
-            fecha: document.getElementById('fechaElegida').value,
-            nombre: document.getElementById('nombre').value,
-            correo: document.getElementById('correo').value,
-            telefono: document.getElementById('telefono').value,
-            modalidad: document.getElementById('modalidad').value,
-            servicio: document.getElementById('servicio').value,
-            cargo: document.getElementById('cargo').value,
-            notas: document.getElementById('notas').value
-        };
-
-        const respuesta = await fetch('/reservar', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(datos)
-        });
-
-        const resultado = await respuesta.json();
-        if(resultado.status === 'success'){
-            alert("¡Reserva confirmada exitosamente!");
-            window.location.reload(); // Recargar la página (la fecha desaparecerá)
-        } else {
-            alert("Error: " + resultado.mensaje);
-            btn.innerText = "Confirmar Reserva"; btn.disabled = false;
+    <script>
+        function mostrarFormulario() {
+            document.getElementById('paso1').classList.add('hidden');
+            document.getElementById('paso2').classList.remove('hidden');
         }
-    });
-</script>
 
+        function volverInicio() {
+            document.getElementById('paso2').classList.add('hidden');
+            document.getElementById('paso1').classList.remove('hidden');
+        }
+
+        document.getElementById('reservaForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerText = "Procesando...";
+
+            const datos = {
+                nombre: document.getElementById('nombre').value,
+                correo: document.getElementById('correo').value,
+                servicio: document.getElementById('servicio').value,
+                fecha: document.getElementById('fecha').value,
+                modalidad: document.getElementById('modalidad').value,
+                notas: document.getElementById('notas').value
+            };
+
+            try {
+                const response = await fetch('/reservar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    alert('¡Reserva Exitosa! Revisa tu correo y calendario para el link de Teams.');
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + result.mensaje);
+                    btn.disabled = false;
+                    btn.innerText = "Confirmar y Crear Reunión en Teams";
+                }
+            } catch (error) {
+                alert('Hubo un problema al conectar con el servidor.');
+                btn.disabled = false;
+                btn.innerText = "Confirmar y Crear Reunión en Teams";
+            }
+        };
+    </script>
 </body>
 </html>
