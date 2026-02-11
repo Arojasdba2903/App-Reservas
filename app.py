@@ -17,27 +17,30 @@ supabase: Client = create_client(url, key)
 TEAMS_WEBHOOK_URL = "https://default51d73d7c33864091abf09f53c878c6.d5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/6e4e76f7ce9b43a3b931c0576160376f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Yfz5As0okOdm6xtVlTSQ5DqGJ1CYKlIOMQqKPS56_kc"
 
 def enviar_alerta_teams(datos):
-    """Envia notificación simplificada a Teams para máxima compatibilidad"""
+    """Envia mensaje de texto simple a Teams para evitar errores de ChatThread"""
     try:
-        # Formato de texto enriquecido simple
-        texto_alerta = (
-            f"🔔 **¡Nueva Reserva Recibida!**\n\n"
+        # Texto plano con formato básico de negritas
+        texto_mensaje = (
+            f"🔔 **¡NUEVA RESERVA RECIBIDA!**\n\n"
             f"👤 **Cliente:** {datos['nombre']}\n"
             f"📅 **Fecha:** {datos['fecha']}\n"
-            f"📧 **Correo:** {datos['correo']}\n"
             f"💼 **Servicio:** {datos['servicio']}\n"
+            f"📧 **Correo:** {datos['correo']}\n"
+            f"📱 **Teléfono:** {datos['telefono']}\n"
             f"📍 **Modalidad:** {datos['modalidad']}\n"
             f"📝 **Notas:** {datos.get('notas', 'Sin notas')}"
         )
         
-        mensaje = {
-            "text": texto_alerta
+        payload = {
+            "text": texto_mensaje
         }
         
-        response = requests.post(TEAMS_WEBHOOK_URL, json=mensaje)
-        print(f"Respuesta de Teams: {response.status_code}")
+        # Enviamos la solicitud
+        r = requests.post(TEAMS_WEBHOOK_URL, json=payload)
+        print(f"Resultado Teams: {r.status_code}")
+        
     except Exception as e:
-        print(f"Error enviando a Teams: {e}")
+        print(f"Error en la alerta: {e}")
 
 # --- RUTA 1: Mostrar la página ---
 @app.route('/')
@@ -54,7 +57,7 @@ def inicio():
 def reservar():
     datos = request.json
     try:
-        # 1. Guardar los datos del cliente en Supabase
+        # 1. Guardar en Supabase
         supabase.table("reservas_clientes").insert({
             "nombre": datos["nombre"],
             "correo": datos["correo"],
@@ -66,10 +69,10 @@ def reservar():
             "fecha_reserva": datos["fecha"]
         }).execute()
         
-        # 2. Bloquear la fecha
+        # 2. Actualizar disponibilidad
         supabase.table("dias_disponibles").update({"estado": "Ocupado"}).eq("fecha", datos["fecha"]).execute()
         
-        # 3. ENVIAR ALERTA A TEAMS
+        # 3. Notificar a Teams
         enviar_alerta_teams(datos)
         
         return jsonify({"status": "success"})
