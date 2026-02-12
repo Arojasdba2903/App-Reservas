@@ -7,31 +7,28 @@
 
 <style>
 /* --------------------------------------------------- */
-/* ESTILOS GENERALES Y FONDO GLOBAL                   */
+/* ESTILOS GENERALES Y FONDO DE IMAGEN                */
 /* --------------------------------------------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     color: #333;
     overflow-x: hidden;
+
+    /* AQUI ESTA TU IMAGEN DE FONDO */
+    /* Asegúrate de que la imagen esté en la carpeta static/img/ */
+    background: url('static/img/fondo.jpg') no-repeat center center fixed;
     
-    /* --- AQUÍ SE DEFINE EL FONDO PARA TODAS LAS PANTALLAS --- */
-    /* Si tienes una imagen de fondo real, descomenta la linea de abajo y pon la ruta: */
-    /* background: url('static/img/tu-fondo.jpg') no-repeat center center fixed; */
+    /* Hace que la imagen cubra todo el espacio sin deformarse */
+    background-size: cover; 
     
-    /* Por defecto usaremos el degradado naranja que tenías: */
-    background: linear-gradient(135deg, #ff9a4d, #d26727, #7a3413);
-    
-    background-size: cover; /* Asegura que cubra toda la pantalla */
-    min-height: 100vh;      /* Asegura que llegue hasta abajo */
-    background-attachment: fixed; /* El fondo se queda quieto al hacer scroll */
+    min-height: 100vh;
 }
 
 /* --------------------------------------------------- */
 /* PANTALLA DE BIENVENIDA                             */
 /* --------------------------------------------------- */
 #pantalla-bienvenida {
-    /* Quitamos el background de aquí para que se vea el del body */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -42,14 +39,15 @@ body {
 }
 
 .tarjeta-bienvenida {
-    background: rgba(255, 255, 255, 0.15); /* Más transparente para ver el fondo */
-    backdrop-filter: blur(10px);           /* Efecto vidrio */
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Fondo blanco semitransparente para que se lea el texto sobre la foto */
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(8px); /* Efecto borroso detrás del cuadro */
+    border: 1px solid rgba(255, 255, 255, 0.5);
     padding: 50px 40px;
     border-radius: 20px;
     max-width: 800px;
     text-align: center;
-    color: white;
+    color: #333; /* Texto oscuro para contraste con fondo blanco */
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 10;
@@ -57,17 +55,17 @@ body {
 
 .tarjeta-bienvenida h1 {
     font-size: 28px; margin-top: 0; margin-bottom: 25px;
-    text-shadow: 1px 2px 6px rgba(0,0,0,0.4);
+    color: #d26727; /* Color corporativo para el título */
 }
 
 .tarjeta-bienvenida p {
     font-size: 16px; line-height: 1.6; margin-bottom: 35px;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    font-weight: 500;
 }
 
 #btn-comenzar {
-    background-color: white;
-    color: #d26727;
+    background-color: #d26727;
+    color: white;
     padding: 15px 40px;
     font-size: 18px;
     border-radius: 30px;
@@ -78,30 +76,29 @@ body {
     transition: transform 0.2s;
 }
 
-#btn-comenzar:hover { transform: scale(1.05); }
+#btn-comenzar:hover { background-color: #a94e1c; transform: scale(1.05); }
 
 /* --------------------------------------------------- */
 /* ESTILOS PARA LOS LOGOS (Inferior Izquierda)        */
 /* --------------------------------------------------- */
 .contenedor-logos {
-    position: absolute;
+    position: absolute; /* Flotan sobre el fondo */
     bottom: 30px;
     left: 30px;
     display: flex;
     gap: 20px;
-    z-index: 5;
+    z-index: 20; /* Asegura que estén ENCIMA de la imagen de fondo */
 }
 
 .contenedor-logos img {
     height: 60px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Sombra para resaltar sobre la foto */
     transition: transform 0.3s ease;
-    background: rgba(255,255,255,0.15); /* Fondo suave tras los logos */
-    padding: 8px;
+    background: rgba(255,255,255,0.8); /* Pequeño fondo blanco detrás de cada logo para resaltar */
+    padding: 10px;
     border-radius: 10px;
-    backdrop-filter: blur(5px);
 }
 
 .contenedor-logos img:hover { transform: scale(1.1); }
@@ -111,7 +108,7 @@ body {
 /* --------------------------------------------------- */
 #pantalla-reserva { 
     padding: 40px 20px; 
-    min-height: 100vh; /* Para centrar verticalmente si se desea */
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
@@ -123,19 +120,18 @@ body {
     flex-wrap: wrap;
 }
 
-/* Estilos compartidos para las columnas (Efecto Tarjeta Blanca) */
+/* Las cajas del formulario también necesitan fondo para no perderse en la imagen */
 .columna-calendario, .columna-formulario {
-    background: rgba(255, 255, 255, 0.95); /* Blanco casi opaco */
+    background: rgba(255, 255, 255, 0.95); /* Blanco casi sólido */
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     backdrop-filter: blur(5px);
 }
 
 .columna-calendario { flex: 6; min-width: 300px; }
 .columna-formulario { flex: 4; min-width: 300px; }
 
-/* Títulos dentro del formulario */
 h2 { color: #d26727; }
 
 /* Grid del calendario */
@@ -182,17 +178,16 @@ h2 { color: #d26727; }
     color: #333;
 }
 
-/* Formulario Inputs */
+/* Inputs */
 .grupo-form { margin-bottom: 15px; }
 .grupo-form label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
 .grupo-form input {
     width: 100%; padding: 12px;
     border: 1px solid #ccc; border-radius: 8px;
-    box-sizing: border-box; background: #f9f9f9;
+    box-sizing: border-box; background: #fff;
 }
-.grupo-form input:focus { border-color: #d26727; outline: none; background: white; }
+.grupo-form input:focus { border-color: #d26727; outline: none; }
 
-/* Botón Confirmar */
 button[type="submit"] {
     background-color: #d26727;
     color: white;
@@ -204,9 +199,7 @@ button[type="submit"] {
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
-    transition: background 0.3s;
 }
-
 button[type="submit"]:hover { background-color: #a94e1c; }
 button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
 
@@ -215,11 +208,10 @@ button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
 /* Responsivo */
 @media (max-width: 768px) {
     .contenedor-logos {
-        bottom: 10px; left: 50%; transform: translateX(-50%);
+        bottom: 15px; left: 50%; transform: translateX(-50%);
         width: 100%; justify-content: center;
     }
-    .contenedor-logos img { height: 40px; }
-    .contenedor-principal { flex-direction: column; }
+    .contenedor-logos img { height: 45px; }
 }
 </style>
 </head>
@@ -281,23 +273,13 @@ button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
 </div>
 
 <script>
-// Transición suave entre pantallas
+// Transición
 document.getElementById('btn-comenzar').addEventListener('click', function() {
-    const bienvenida = document.getElementById('pantalla-bienvenida');
-    const reserva = document.getElementById('pantalla-reserva');
-    
-    // Efecto de desvanecimiento simple
-    bienvenida.style.opacity = '0';
-    setTimeout(() => {
-        bienvenida.style.display = 'none';
-        reserva.style.display = 'block';
-        reserva.style.opacity = '0';
-        // Pequeña animación de entrada para el formulario
-        setTimeout(() => { reserva.style.transition = 'opacity 0.5s'; reserva.style.opacity = '1'; }, 50);
-    }, 300); // Espera a que termine la transición CSS (si se agregara)
+    document.getElementById('pantalla-bienvenida').style.display = 'none';
+    document.getElementById('pantalla-reserva').style.display = 'block';
 });
 
-// Configuración de Fechas
+// Lógica Fechas
 const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 document.querySelectorAll('.tarjeta').forEach(tarjeta => {
@@ -316,14 +298,8 @@ function seleccionarFecha(elemento){
     elemento.classList.add('seleccionada');
     const fechaElegida = elemento.getAttribute('data-fecha');
     document.getElementById('fechaElegida').value = fechaElegida;
-    
-    const msg = document.getElementById('mensaje-fecha');
-    msg.innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-    msg.style.color = '#2ecc71'; // Verde éxito
-    
-    const btn = document.getElementById('btnGuardar');
-    btn.disabled = false;
-    btn.style.cursor = 'pointer';
+    document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
+    document.getElementById('btnGuardar').disabled = false;
 }
 </script>
 
