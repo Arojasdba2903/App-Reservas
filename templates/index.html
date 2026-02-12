@@ -1,227 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reserva de Citas - Alpharma</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Citas - Alpharma</title>
+    <style>
+        /* Ajuste en el body */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; color: #333; }
+        
+        /* --------------------------------------------------- */
+        /* PANTALLA DE BIENVENIDA (Modificada)                 */
+        /* --------------------------------------------------- */
+        #pantalla-bienvenida {
+            /* SE HA CAMBIADO EL DEGRADADO POR LA IMAGEN DE FONDO */
+            background: url('static/img/fondo.jpg') no-repeat center center;
+            background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+            
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative; /* Necesario para posicionar los logos absolutamente dentro de este contenedor */
+        }
 
-<style>
-/* --------------------------------------------------- */
-/* ESTILOS GENERALES Y FONDO DE IMAGEN                */
-/* --------------------------------------------------- */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    color: #333;
-    overflow-x: hidden;
+        .tarjeta-bienvenida {
+            /* Se oscureció ligeramente el fondo y se añadió más desenfoque para que el texto resalte sobre la imagen */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 50px 40px;
+            border-radius: 15px;
+            max-width: 800px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+            z-index: 2; /* Asegura que la tarjeta esté por encima del fondo pero debajo de los logos si se superponen */
+        }
 
-    /* AQUI ESTA TU IMAGEN DE FONDO */
-    /* Asegúrate de que la imagen esté en la carpeta static/img/ */
-    background: url('static/img/fondo.jpg') no-repeat center center fixed;
-    
-    /* Hace que la imagen cubra todo el espacio sin deformarse */
-    background-size: cover; 
-    
-    min-height: 100vh;
-}
+        .tarjeta-bienvenida h1 {
+            font-size: 28px; margin-top: 0; margin-bottom: 25px;
+            text-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+        }
 
-/* --------------------------------------------------- */
-/* PANTALLA DE BIENVENIDA                             */
-/* --------------------------------------------------- */
-#pantalla-bienvenida {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-}
+        .tarjeta-bienvenida p {
+            font-size: 16px; line-height: 1.6; margin-bottom: 35px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            font-weight: 500;
+        }
 
-.tarjeta-bienvenida {
-    /* Fondo blanco semitransparente para que se lea el texto sobre la foto */
-    background: rgba(255, 255, 255, 0.85); 
-    backdrop-filter: blur(8px); /* Efecto borroso detrás del cuadro */
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 50px 40px;
-    border-radius: 20px;
-    max-width: 800px;
-    text-align: center;
-    color: #333; /* Texto oscuro para contraste con fondo blanco */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-    position: relative;
-    z-index: 10;
-}
+        #btn-comenzar {
+            background-color: white; color: #003366; padding: 15px 40px; font-size: 18px; border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); width: auto; display: inline-block; border: none; cursor: pointer; transition: 0.3s;
+        }
 
-.tarjeta-bienvenida h1 {
-    font-size: 28px; margin-top: 0; margin-bottom: 25px;
-    color: #d26727; /* Color corporativo para el título */
-}
+        #btn-comenzar:hover { background-color: #e6f0fa; color: #001f3f; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 
-.tarjeta-bienvenida p {
-    font-size: 16px; line-height: 1.6; margin-bottom: 35px;
-    font-weight: 500;
-}
+        /* --------------------------------------------------- */
+        /* NUEVOS ESTILOS: CONTENEDOR DE LOGOS INFERIOR        */
+        /* --------------------------------------------------- */
+        .contenedor-logos {
+            position: absolute; /* Posicionamiento absoluto respecto a #pantalla-bienvenida */
+            bottom: 30px;       /* Distancia desde abajo */
+            left: 40px;         /* Distancia desde la izquierda */
+            display: flex;      /* Distribución horizontal */
+            gap: 25px;          /* Espacio entre cada logo */
+            z-index: 10;        /* Asegura que estén por encima de todo */
+            align-items: center;
+        }
 
-#btn-comenzar {
-    background-color: #d26727;
-    color: white;
-    padding: 15px 40px;
-    font-size: 18px;
-    border-radius: 30px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s;
-}
+        .contenedor-logos img {
+            height: 65px;       /* Altura fija para uniformidad */
+            width: auto;        /* El ancho se ajusta automáticamente */
+            object-fit: contain;
+            /* Sombra suave para que los logos resalten sobre cualquier fondo */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); 
+            transition: transform 0.3s ease;
+        }
 
-#btn-comenzar:hover { background-color: #a94e1c; transform: scale(1.05); }
+        /* Efecto opcional al pasar el mouse sobre los logos */
+        .contenedor-logos img:hover {
+            transform: scale(1.1);
+        }
 
-/* --------------------------------------------------- */
-/* ESTILOS PARA LOS LOGOS (Inferior Izquierda)        */
-/* --------------------------------------------------- */
-.contenedor-logos {
-    position: absolute; /* Flotan sobre el fondo */
-    bottom: 30px;
-    left: 30px;
-    display: flex;
-    gap: 20px;
-    z-index: 20; /* Asegura que estén ENCIMA de la imagen de fondo */
-}
+        /* Ajuste para pantallas pequeñas (móviles) */
+        @media (max-width: 768px) {
+            .contenedor-logos {
+                bottom: 20px; left: 20px; gap: 15px;
+            }
+            .contenedor-logos img { height: 45px; } /* Logos más pequeños en celular */
+        }
 
-.contenedor-logos img {
-    height: 60px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Sombra para resaltar sobre la foto */
-    transition: transform 0.3s ease;
-    background: rgba(255,255,255,0.8); /* Pequeño fondo blanco detrás de cada logo para resaltar */
-    padding: 10px;
-    border-radius: 10px;
-}
 
-.contenedor-logos img:hover { transform: scale(1.1); }
-
-/* --------------------------------------------------- */
-/* PANTALLA DE RESERVA (FORMULARIO)                   */
-/* --------------------------------------------------- */
-#pantalla-reserva { 
-    padding: 40px 20px; 
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-
-.contenedor-principal {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-/* Las cajas del formulario también necesitan fondo para no perderse en la imagen */
-.columna-calendario, .columna-formulario {
-    background: rgba(255, 255, 255, 0.95); /* Blanco casi sólido */
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    backdrop-filter: blur(5px);
-}
-
-.columna-calendario { flex: 6; min-width: 300px; }
-.columna-formulario { flex: 4; min-width: 300px; }
-
-h2 { color: #d26727; }
-
-/* Grid del calendario */
-.grid-calendario {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.tarjeta {
-    border: 1px solid #eee;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-    background: white;
-    transition: 0.2s;
-}
-
-.tarjeta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(210,103,39,0.2);
-    border-color: #d26727;
-}
-
-.tarjeta.seleccionada {
-    border: 2px solid #d26727;
-    background-color: #fff2ea;
-    transform: scale(1.05);
-}
-
-.tarjeta .mes {
-    background-color: #d26727;
-    color: white;
-    font-size: 12px;
-    padding: 5px 0;
-    font-weight: bold;
-}
-
-.tarjeta .dia {
-    padding: 15px 0;
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Inputs */
-.grupo-form { margin-bottom: 15px; }
-.grupo-form label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
-.grupo-form input {
-    width: 100%; padding: 12px;
-    border: 1px solid #ccc; border-radius: 8px;
-    box-sizing: border-box; background: #fff;
-}
-.grupo-form input:focus { border-color: #d26727; outline: none; }
-
-button[type="submit"] {
-    background-color: #d26727;
-    color: white;
-    padding: 15px;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-}
-button[type="submit"]:hover { background-color: #a94e1c; }
-button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
-
-#mensaje-fecha { display: block; margin-bottom: 15px; font-weight: bold; color: #d26727; }
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .contenedor-logos {
-        bottom: 15px; left: 50%; transform: translateX(-50%);
-        width: 100%; justify-content: center;
-    }
-    .contenedor-logos img { height: 45px; }
-}
-</style>
+        /* --------------------------------------------------- */
+        /* ESTILOS ORIGINALES: Formulario (Sin cambios)        */
+        /* --------------------------------------------------- */
+        #pantalla-reserva { padding: 20px; }
+        .contenedor-principal { display: flex; max-width: 1200px; margin: 0 auto; gap: 30px; }
+        .columna-calendario { flex: 6; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .grid-calendario { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
+        .tarjeta { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
+        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,51,102,0.2); }
+        .tarjeta.seleccionada { border: 2px solid #003366; background-color: #e6f0fa; }
+        .tarjeta .mes { background-color: #003366; color: white; font-weight: bold; padding: 8px 0; font-size: 14px; }
+        .tarjeta .dia { padding: 20px 0; font-size: 32px; font-weight: bold; color: #222; }
+        .columna-formulario { flex: 4; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .grupo-form { margin-bottom: 15px; }
+        .grupo-form label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold; }
+        .grupo-form input, .grupo-form select, .grupo-form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #003366; color: white; padding: 12px; width: 100%; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background-color: #002244; }
+        button:disabled { background-color: #aaa; cursor: not-allowed; }
+        #mensaje-fecha { color: #003366; font-weight: bold; margin-bottom: 20px; display: block; }
+    </style>
 </head>
-
 <body>
 
 <div id="pantalla-bienvenida">
     <div class="tarjeta-bienvenida">
         <h1>Bienvenidos al Calendario de Auditorias Clientes Alpharma 2026</h1>
-        <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes...</p>
+        <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes, gracias a la calidad y seguridad de nuestros productos y servicios. Nuestra certificación en ISO 9001 e ISO 14001, junto con el reconocimiento ambiental distrital PREAD en la categoría Élite, reflejan nuestro compromiso con la excelencia, la sostenibilidad y la mejora continua. Estos logros nos diferencian en el mercado, generando confianza y valor para quienes más lo necesitan.</p>
         <button id="btn-comenzar">Comenzar</button>
     </div>
 
@@ -230,13 +129,13 @@ button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
         <img src="static/img/logo2.png" alt="Logo 2">
         <img src="static/img/logo3.png" alt="Logo 3">
     </div>
-</div>
+    </div>
 
-<div id="pantalla-reserva" style="display:none;">
+
+<div id="pantalla-reserva" style="display: none;">
     <div class="contenedor-principal">
-        
         <div class="columna-calendario">
-            <h2 style="margin-top:0;">Selecciona una fecha</h2>
+            <h2 style="color: #003366; margin-top: 0;">Selecciona una fecha</h2>
             <div class="grid-calendario">
                 {% for item in fechas %}
                 <div class="tarjeta" data-fecha="{{ item.fecha }}" onclick="seleccionarFecha(this)">
@@ -248,23 +147,29 @@ button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
         </div>
 
         <div class="columna-formulario">
-            <h2 style="margin-top:0;">Detalles de la Cita</h2>
-            <span id="mensaje-fecha">Selecciona una fecha del calendario</span>
-
+            <h2 style="color: #003366; margin-top: 0;">Detalles de la Cita</h2>
+            <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
+            
             <form id="formulario-reserva">
                 <input type="hidden" id="fechaElegida" required>
-                <div class="grupo-form">
-                    <label>Nombre Completo *</label>
-                    <input type="text" id="nombre" placeholder="Tu nombre..." required>
+
+                <div class="grupo-form"><label>Nombre Completo *</label><input type="text" id="nombre" required></div>
+                <div class="grupo-form"><label>Correo Electrónico *</label><input type="email" id="correo" required></div>
+                <div class="grupo-form"><label>Teléfono</label><input type="text" id="telefono"></div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <div class="grupo-form" style="flex: 1;">
+                        <label>Modalidad *</label>
+                        <select id="modalidad" required><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option></select>
+                    </div>
+                    <div class="grupo-form" style="flex: 1;">
+                        <label>Servicio *</label>
+                        <select id="servicio" required><option value="Comercial">Comercial</option><option value="CM">CM</option><option value="SICM">SICM</option></select>
+                    </div>
                 </div>
-                <div class="grupo-form">
-                    <label>Correo Electrónico *</label>
-                    <input type="email" id="correo" placeholder="ejemplo@correo.com" required>
-                </div>
-                <div class="grupo-form">
-                    <label>Teléfono</label>
-                    <input type="text" id="telefono" placeholder="Opcional">
-                </div>
+
+                <div class="grupo-form"><label>Cargo</label><input type="text" id="cargo"></div>
+                <div class="grupo-form"><label>Comentarios</label><textarea id="notas" rows="3"></textarea></div>
 
                 <button type="submit" id="btnGuardar" disabled>Confirmar Reserva</button>
             </form>
@@ -273,34 +178,72 @@ button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
 </div>
 
 <script>
-// Transición
-document.getElementById('btn-comenzar').addEventListener('click', function() {
-    document.getElementById('pantalla-bienvenida').style.display = 'none';
-    document.getElementById('pantalla-reserva').style.display = 'block';
-});
+    // Javascript permanece exactamente igual
+    document.getElementById('btn-comenzar').addEventListener('click', function() {
+        document.getElementById('pantalla-bienvenida').style.display = 'none';
+        document.getElementById('pantalla-reserva').style.display = 'block';
+    });
 
-// Lógica Fechas
-const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-
-document.querySelectorAll('.tarjeta').forEach(tarjeta => {
-    const fechaStr = tarjeta.getAttribute('data-fecha');
-    if(!fechaStr) return;
-    const partes = fechaStr.split('-');
-    const mesIndex = parseInt(partes[1]) - 1;
-    if(meses[mesIndex]) {
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    
+    document.querySelectorAll('.tarjeta').forEach(tarjeta => {
+        const fechaStr = tarjeta.getAttribute('data-fecha');
+        const partes = fechaStr.split('-'); 
+        const mesIndex = parseInt(partes[1]) - 1;
+        
         tarjeta.querySelector('.mes').innerText = meses[mesIndex].toUpperCase();
-    }
-    tarjeta.querySelector('.dia').innerText = partes[2];
-});
+        tarjeta.querySelector('.dia').innerText = partes[2];
+    });
 
-function seleccionarFecha(elemento){
-    document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
-    elemento.classList.add('seleccionada');
-    const fechaElegida = elemento.getAttribute('data-fecha');
-    document.getElementById('fechaElegida').value = fechaElegida;
-    document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-    document.getElementById('btnGuardar').disabled = false;
-}
+    function seleccionarFecha(elemento) {
+        document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
+        elemento.classList.add('seleccionada');
+        
+        const fechaElegida = elemento.getAttribute('data-fecha');
+        document.getElementById('fechaElegida').value = fechaElegida;
+        document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
+        document.getElementById('btnGuardar').disabled = false;
+    }
+
+    document.getElementById('formulario-reserva').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btnGuardar');
+        btn.innerText = "Guardando..."; btn.disabled = true;
+
+        const datos = {
+            fecha: document.getElementById('fechaElegida').value,
+            nombre: document.getElementById('nombre').value,
+            correo: document.getElementById('correo').value,
+            telefono: document.getElementById('telefono').value,
+            modalidad: document.getElementById('modalidad').value,
+            servicio: document.getElementById('servicio').value,
+            cargo: document.getElementById('cargo').value,
+            notas: document.getElementById('notas').value
+        };
+
+        // Nota: Asegúrate de que tu backend maneje esta ruta '/reservar'
+        // Si estás probando solo HTML, esta parte fallará pero es normal.
+        try {
+            const respuesta = await fetch('/reservar', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(datos)
+            });
+
+            const resultado = await respuesta.json();
+            if(resultado.status === 'success'){
+                alert("¡Reserva confirmada exitosamente!");
+                window.location.reload(); 
+            } else {
+                alert("Error: " + resultado.mensaje);
+                btn.innerText = "Confirmar Reserva"; btn.disabled = false;
+            }
+        } catch (error) {
+             console.error("Error al enviar:", error);
+             alert("Error de conexión con el servidor.");
+             btn.innerText = "Confirmar Reserva"; btn.disabled = false;
+        }
+    });
 </script>
 
 </body>
