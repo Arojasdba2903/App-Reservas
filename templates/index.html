@@ -13,10 +13,24 @@
             margin: 0;
             color: #333;
             overflow-x: hidden;
+            
             /* IMAGEN DE FONDO */
             background: url('static/img/fondo.jpg') no-repeat center center fixed;
             background-size: cover; 
             min-height: 100vh;
+        }
+
+        /* --------------------------------------------------- */
+        /* ESTILOS COMPARTIDOS (VIDRIO / GLASS)               */
+        /* --------------------------------------------------- */
+        /* Esta clase define el estilo transparente para Bienvenida Y Formulario */
+        .estilo-vidrio {
+            background: rgba(255, 255, 255, 0.15); /* Transparencia alta */
+            backdrop-filter: blur(15px);           /* Efecto borroso */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+            color: white; /* Texto blanco para que resalte sobre el fondo */
         }
 
         /* --------------------------------------------------- */
@@ -33,26 +47,20 @@
         }
 
         .tarjeta-bienvenida {
-            background: rgba(255, 255, 255, 0.15); /* Fondo vidrio */
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 50px 40px;
-            border-radius: 15px;
             max-width: 800px;
             text-align: center;
-            color: white;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
             z-index: 2;
         }
 
         .tarjeta-bienvenida h1 {
             font-size: 28px; margin-top: 0; margin-bottom: 25px;
-            text-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+            text-shadow: 1px 2px 6px rgba(0,0,0,0.6);
         }
 
         .tarjeta-bienvenida p {
             font-size: 16px; line-height: 1.6; margin-bottom: 35px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
             font-weight: 500;
         }
 
@@ -76,19 +84,13 @@
             align-items: center;
         }
 
-        /* MODIFICACIÓN AQUÍ PARA TAMAÑO UNIFORME */
+        /* === CAMBIO DE TAMAÑO AQUÍ === */
         .contenedor-logos img {
-            /* Se define un ancho y alto fijos para crear una caja cuadrada igual para todos */
-            width: 80px;   
-            height: 80px; 
-            /* 'contain' asegura que el logo se ajuste dentro de la caja sin estirarse */
-            object-fit: contain; 
-
+            width: 110px;   /* Aumentado de 80px a 110px */
+            height: 110px;  /* Aumentado de 80px a 110px */
+            object-fit: contain; /* Ajuste sin deformar */
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); 
             transition: transform 0.3s ease;
-            
-            /* Opcional: un fondo blanco sutil transparente detrás de cada logo ayuda a unificar más */
-            /* background-color: rgba(255,255,255,0.1); padding: 5px; border-radius: 8px; */
         }
 
         .contenedor-logos img:hover { transform: scale(1.1); }
@@ -110,18 +112,20 @@
             flex-wrap: wrap;
         }
 
+        /* Aplicamos el estilo vidrio a las columnas */
         .columna-calendario, .columna-formulario {
-            background: rgba(255, 255, 255, 0.95);
             padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px);
         }
-
+        
         .columna-calendario { flex: 6; min-width: 300px; }
         .columna-formulario { flex: 4; min-width: 300px; }
 
-        h2 { color: #003366; margin-top: 0; }
+        /* Títulos en blanco con sombra para leerse sobre la imagen */
+        h2 { 
+            color: white; 
+            margin-top: 0; 
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
 
         /* Grid del calendario */
         .grid-calendario {
@@ -131,24 +135,27 @@
             margin-top: 20px;
         }
 
+        /* Tarjetas del calendario (Mantienen fondo blanco para legibilidad de fechas) */
         .tarjeta {
-            border: 1px solid #ddd;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
             text-align: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.9); /* Blanco casi opaco */
             transition: 0.2s;
+            color: #333; /* Texto oscuro dentro de la tarjeta blanca */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .tarjeta:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 51, 102, 0.2);
-            border-color: #003366;
+            background: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Resplandor blanco */
         }
 
         .tarjeta.seleccionada {
-            border: 2px solid #003366;
-            background-color: #e6f0fa;
+            border: 3px solid #00a8e8; /* Azul claro brillante */
+            background-color: white;
             transform: scale(1.05);
         }
 
@@ -169,23 +176,36 @@
 
         /* Inputs del Formulario */
         .grupo-form { margin-bottom: 15px; }
-        .grupo-form label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 14px; }
         
+        /* Etiquetas en blanco para leerse sobre el fondo transparente */
+        .grupo-form label { 
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            color: white; 
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Los inputs se quedan blancos para que sea fácil escribir */
         .grupo-form input, 
         .grupo-form select, 
         .grupo-form textarea {
             width: 100%; padding: 10px;
-            border: 1px solid #ccc; border-radius: 5px;
-            box-sizing: border-box; background: #fff;
+            border: 1px solid rgba(255,255,255,0.5); 
+            border-radius: 5px;
+            box-sizing: border-box; 
+            background: rgba(255, 255, 255, 0.9); /* Blanco casi sólido */
+            color: #333;
         }
         
         .grupo-form input:focus, .grupo-form select:focus, .grupo-form textarea:focus {
-            border-color: #003366; outline: none;
+            border-color: #00a8e8; outline: none; background: white;
         }
 
         button[type="submit"] {
-            background-color: #003366;
-            color: white;
+            background-color: white;
+            color: #003366;
             padding: 12px;
             width: 100%;
             border: none;
@@ -195,11 +215,18 @@
             cursor: pointer;
             margin-top: 10px;
             transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        button[type="submit"]:hover { background-color: #002244; }
-        button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
+        button[type="submit"]:hover { background-color: #e6f0fa; transform: scale(1.02); }
+        button[type="submit"]:disabled { background-color: #aaa; color: #555; cursor: not-allowed; transform: none; }
 
-        #mensaje-fecha { display: block; margin-bottom: 15px; font-weight: bold; color: #003366; }
+        #mensaje-fecha { 
+            display: block; 
+            margin-bottom: 15px; 
+            font-weight: bold; 
+            color: #ffdd57; /* Amarillo claro para resaltar sobre fondo oscuro/vidrio */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
 
         /* Responsivo */
         @media (max-width: 768px) {
@@ -207,8 +234,8 @@
                 bottom: 15px; left: 50%; transform: translateX(-50%);
                 width: 100%; justify-content: center;
             }
-            /* En móvil también forzamos un tamaño cuadrado uniforme más pequeño */
-            .contenedor-logos img { width: 50px; height: 50px; }
+            /* === CAMBIO DE TAMAÑO MÓVIL AQUÍ === */
+            .contenedor-logos img { width: 70px; height: 70px; } /* Aumentado de 50px a 70px */
             .contenedor-principal { flex-direction: column; }
         }
     </style>
@@ -216,7 +243,7 @@
 <body>
 
 <div id="pantalla-bienvenida">
-    <div class="tarjeta-bienvenida">
+    <div class="tarjeta-bienvenida estilo-vidrio">
         <h1>Bienvenidos al Calendario de Auditorias Clientes Alpharma 2026</h1>
         <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes, gracias a la calidad y seguridad de nuestros productos y servicios. Nuestra certificación en ISO 9001 e ISO 14001, junto con el reconocimiento ambiental distrital PREAD en la categoría Élite, reflejan nuestro compromiso con la excelencia, la sostenibilidad y la mejora continua. Estos logros nos diferencian en el mercado, generando confianza y valor para quienes más lo necesitan.</p>
         <button id="btn-comenzar">Comenzar</button>
@@ -232,7 +259,7 @@
 <div id="pantalla-reserva" style="display:none;">
     <div class="contenedor-principal">
         
-        <div class="columna-calendario">
+        <div class="columna-calendario estilo-vidrio">
             <h2>Selecciona una fecha</h2>
             <div class="grid-calendario">
                 {% for item in fechas %}
@@ -244,7 +271,7 @@
             </div>
         </div>
 
-        <div class="columna-formulario">
+        <div class="columna-formulario estilo-vidrio">
             <h2>Detalles de la Cita</h2>
             <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
 
@@ -298,13 +325,11 @@
 </div>
 
 <script>
-    // 1. Lógica de transición entre pantallas
     document.getElementById('btn-comenzar').addEventListener('click', function() {
         document.getElementById('pantalla-bienvenida').style.display = 'none';
         document.getElementById('pantalla-reserva').style.display = 'block';
     });
 
-    // 2. Formateo de fechas
     const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
     document.querySelectorAll('.tarjeta').forEach(tarjeta => {
@@ -319,7 +344,6 @@
         tarjeta.querySelector('.dia').innerText = partes[2];
     });
 
-    // 3. Selección de fecha
     function seleccionarFecha(elemento){
         document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
         elemento.classList.add('seleccionada');
@@ -329,12 +353,11 @@
         
         const msg = document.getElementById('mensaje-fecha');
         msg.innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-        msg.style.color = '#2ecc71'; // Verde éxito
+        msg.style.color = '#76ff03'; // Verde brillante para resaltar en oscuro
         
         document.getElementById('btnGuardar').disabled = false;
     }
 
-    // 4. Envío del formulario (Incluye los nuevos campos)
     document.getElementById('formulario-reserva').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btnGuardar');
@@ -345,7 +368,6 @@
             nombre: document.getElementById('nombre').value,
             correo: document.getElementById('correo').value,
             telefono: document.getElementById('telefono').value,
-            // Nuevos campos:
             modalidad: document.getElementById('modalidad').value,
             servicio: document.getElementById('servicio').value,
             cargo: document.getElementById('cargo').value,
