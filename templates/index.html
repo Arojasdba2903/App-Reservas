@@ -8,16 +8,18 @@
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
     margin: 0;
     color: #333;
 }
 
 /* --------------------------------------------------- */
-/* PANTALLA DE BIENVENIDA CON NUEVO DEGRADADO         */
+/* PANTALLA BIENVENIDA CON IMAGEN FULL SCREEN         */
 /* --------------------------------------------------- */
 #pantalla-bienvenida {
-    background: linear-gradient(135deg, #ff9a4d, #d26727, #7a3413);
+    position: relative;
+    background: url("{{ url_for('static', filename='img/fondo.jpg') }}") no-repeat center center;
+    background-size: cover;          /* 🔥 Ajusta a toda la pantalla */
+    background-attachment: fixed;    /* efecto elegante */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -26,54 +28,65 @@ body {
     box-sizing: border-box;
 }
 
+/* Capa oscura para que el texto se vea bien */
+#pantalla-bienvenida::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Tarjeta central */
 .tarjeta-bienvenida {
+    position: relative;
+    z-index: 2;
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 50px 40px;
     border-radius: 20px;
     max-width: 800px;
     text-align: center;
     color: white;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .tarjeta-bienvenida h1 {
     font-size: 28px;
-    margin-top: 0;
     margin-bottom: 25px;
-    text-shadow: 1px 2px 6px rgba(0,0,0,0.4);
 }
 
 .tarjeta-bienvenida p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 35px;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
 #btn-comenzar {
-    background-color: white;
-    color: #7a3413;
+    background-color: #D26727;
+    color: white;
     padding: 15px 40px;
     font-size: 18px;
     border-radius: 30px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    width: auto;
-    display: inline-block;
+    border: none;
+    cursor: pointer;
     transition: 0.3s ease;
 }
 
 #btn-comenzar:hover {
-    background-color: #ffe6d8;
-    color: #d26727;
+    background-color: #a94e1c;
     transform: translateY(-3px);
 }
 
 /* --------------------------------------------------- */
 /* FORMULARIO                                         */
 /* --------------------------------------------------- */
-#pantalla-reserva { padding: 20px; }
+#pantalla-reserva {
+    padding: 20px;
+    display: none;
+    background-color: #f4f7f6;
+    min-height: 100vh;
+}
 
 .contenedor-principal {
     display: flex;
@@ -82,13 +95,16 @@ body {
     gap: 30px;
 }
 
-.columna-calendario {
-    flex: 6;
+.columna-calendario,
+.columna-formulario {
     background: white;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+
+.columna-calendario { flex: 6; }
+.columna-formulario { flex: 4; }
 
 .grid-calendario {
     display: grid;
@@ -113,12 +129,12 @@ body {
 }
 
 .tarjeta.seleccionada {
-    border: 2px solid #d26727;
+    border: 2px solid #D26727;
     background-color: #fff2ea;
 }
 
 .tarjeta .mes {
-    background-color: #d26727;
+    background-color: #D26727;
     color: white;
     font-weight: bold;
     padding: 8px 0;
@@ -129,15 +145,6 @@ body {
     padding: 20px 0;
     font-size: 32px;
     font-weight: bold;
-    color: #222;
-}
-
-.columna-formulario {
-    flex: 4;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .grupo-form { margin-bottom: 15px; }
@@ -145,7 +152,6 @@ body {
 .grupo-form label {
     display: block;
     margin-bottom: 5px;
-    font-size: 14px;
     font-weight: bold;
 }
 
@@ -159,8 +165,8 @@ body {
     box-sizing: border-box;
 }
 
-button {
-    background-color: #d26727;
+button[type="submit"] {
+    background-color: #D26727;
     color: white;
     padding: 12px;
     width: 100%;
@@ -169,14 +175,14 @@ button {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-button:hover { background-color: #a94e1c; }
-button:disabled { background-color: #aaa; cursor: not-allowed; }
+button[type="submit"]:hover {
+    background-color: #a94e1c;
+}
 
 #mensaje-fecha {
-    color: #d26727;
+    color: #D26727;
     font-weight: bold;
     margin-bottom: 20px;
     display: block;
@@ -188,16 +194,16 @@ button:disabled { background-color: #aaa; cursor: not-allowed; }
 
 <div id="pantalla-bienvenida">
     <div class="tarjeta-bienvenida">
-        <h1>Bienvenidos al Calendario de Auditorias Clientes Alpharma 2026</h1>
+        <h1>Bienvenidos al Calendario de Auditorías Clientes Alpharma 2026</h1>
         <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes...</p>
         <button id="btn-comenzar">Comenzar</button>
     </div>
 </div>
 
-<div id="pantalla-reserva" style="display:none;">
+<div id="pantalla-reserva">
     <div class="contenedor-principal">
         <div class="columna-calendario">
-            <h2 style="color:#d26727;margin-top:0;">Selecciona una fecha</h2>
+            <h2 style="color:#D26727;margin-top:0;">Selecciona una fecha</h2>
             <div class="grid-calendario">
                 {% for item in fechas %}
                 <div class="tarjeta" data-fecha="{{ item.fecha }}" onclick="seleccionarFecha(this)">
@@ -209,16 +215,12 @@ button:disabled { background-color: #aaa; cursor: not-allowed; }
         </div>
 
         <div class="columna-formulario">
-            <h2 style="color:#d26727;margin-top:0;">Detalles de la Cita</h2>
+            <h2 style="color:#D26727;margin-top:0;">Detalles de la Cita</h2>
             <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
-
             <form id="formulario-reserva">
                 <input type="hidden" id="fechaElegida" required>
-
                 <div class="grupo-form"><label>Nombre Completo *</label><input type="text" id="nombre" required></div>
                 <div class="grupo-form"><label>Correo Electrónico *</label><input type="email" id="correo" required></div>
-                <div class="grupo-form"><label>Teléfono</label><input type="text" id="telefono"></div>
-
                 <button type="submit" id="btnGuardar" disabled>Confirmar Reserva</button>
             </form>
         </div>
