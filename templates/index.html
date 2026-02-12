@@ -6,206 +6,138 @@
 <title>Reserva de Citas</title>
 
 <style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    color: #333;
-    overflow-x: hidden;
+body{
+    margin:0;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    overflow-x:hidden;
 }
 
-/* --------------------------------------------------- */
-/* PANTALLA BIENVENIDA PREMIUM                        */
-/* --------------------------------------------------- */
-#pantalla-bienvenida {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    overflow: hidden;
+/* ================================================= */
+/* PANTALLA BIENVENIDA                              */
+/* ================================================= */
+#pantalla-bienvenida{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow:hidden;
 }
 
-/* Imagen con animación zoom suave */
-#pantalla-bienvenida::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("{{ url_for('static', filename='img/fondo.jpg') }}") no-repeat center center;
-    background-size: cover;
-    animation: zoomFondo 20s ease-in-out infinite alternate;
-    z-index: 0;
+/* Imagen de fondo con zoom */
+#pantalla-bienvenida::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url("{{ url_for('static', filename='img/fondo.jpg') }}") no-repeat center center;
+    background-size:cover;
+    animation:zoomFondo 20s ease-in-out infinite alternate;
+    z-index:0;
 }
 
-/* Capa aclarada (más clara que antes) */
-#pantalla-bienvenida::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        rgba(255,255,255,0.15),
-        rgba(255,255,255,0.15)
-    );
-    z-index: 1;
+/* Capa clara */
+#pantalla-bienvenida::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,0.18);
+    z-index:1;
 }
 
-/* Animación zoom */
-@keyframes zoomFondo {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
+@keyframes zoomFondo{
+    from{transform:scale(1);}
+    to{transform:scale(1.08);}
 }
 
 /* Tarjeta */
-.tarjeta-bienvenida {
-    position: relative;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(10px);
-    padding: 60px 50px;
-    border-radius: 20px;
-    max-width: 850px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+.tarjeta-bienvenida{
+    position:relative;
+    z-index:2;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(10px);
+    padding:60px 50px;
+    border-radius:20px;
+    max-width:850px;
+    text-align:center;
+    color:white;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
 }
 
-.tarjeta-bienvenida h1 {
-    font-size: 30px;
-    margin-bottom: 25px;
+.tarjeta-bienvenida h1{
+    font-size:30px;
+    margin-bottom:25px;
 }
 
-.tarjeta-bienvenida p {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 40px;
+.tarjeta-bienvenida p{
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:40px;
 }
 
-/* Botón elegante */
-#btn-comenzar {
-    background: linear-gradient(135deg, #D26727, #a94e1c);
-    color: white;
-    padding: 16px 45px;
-    font-size: 18px;
-    border-radius: 40px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+/* Botón */
+#btn-comenzar{
+    background:linear-gradient(135deg,#D26727,#a94e1c);
+    color:white;
+    padding:16px 45px;
+    font-size:18px;
+    border-radius:40px;
+    border:none;
+    cursor:pointer;
+    transition:0.3s ease;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
-#btn-comenzar:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+#btn-comenzar:hover{
+    transform:translateY(-4px);
 }
 
-/* --------------------------------------------------- */
-/* FORMULARIO                                         */
-/* --------------------------------------------------- */
-#pantalla-reserva {
-    padding: 20px;
-    display: none;
-    background-color: #f4f7f6;
-    min-height: 100vh;
+/* ================================================= */
+/* LOGOS INFERIORES                                 */
+/* ================================================= */
+.logos-inferiores{
+    position:absolute;
+    bottom:25px;
+    left:30px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    z-index:3;
 }
 
-.contenedor-principal {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 30px;
+.logos-inferiores img{
+    height:45px;
+    object-fit:contain;
+    opacity:0.9;
+    transition:0.3s ease;
 }
 
-.columna-calendario,
-.columna-formulario {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+.logos-inferiores img:hover{
+    transform:scale(1.05);
+    opacity:1;
 }
 
-.columna-calendario { flex: 6; }
-.columna-formulario { flex: 4; }
+/* Responsive */
+@media (max-width:768px){
+    .logos-inferiores{
+        left:50%;
+        transform:translateX(-50%);
+        bottom:15px;
+    }
 
-.grid-calendario {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
+    .tarjeta-bienvenida{
+        padding:40px 25px;
+    }
 }
 
-.tarjeta {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    background: white;
-}
-
-.tarjeta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(210,103,39,0.3);
-}
-
-.tarjeta.seleccionada {
-    border: 2px solid #D26727;
-    background-color: #fff2ea;
-}
-
-.tarjeta .mes {
-    background-color: #D26727;
-    color: white;
-    font-weight: bold;
-    padding: 8px 0;
-    font-size: 14px;
-}
-
-.tarjeta .dia {
-    padding: 20px 0;
-    font-size: 32px;
-    font-weight: bold;
-}
-
-.grupo-form { margin-bottom: 15px; }
-
-.grupo-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.grupo-form input,
-.grupo-form select,
-.grupo-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-button[type="submit"] {
-    background-color: #D26727;
-    color: white;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #a94e1c;
-}
-
-#mensaje-fecha {
-    color: #D26727;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: block;
+/* ================================================= */
+/* FORMULARIO (segunda pantalla)                    */
+/* ================================================= */
+#pantalla-reserva{
+    display:none;
+    min-height:100vh;
+    background:#f4f7f6;
+    padding:20px;
 }
 </style>
 </head>
@@ -213,21 +145,32 @@ button[type="submit"]:hover {
 <body>
 
 <div id="pantalla-bienvenida">
+
     <div class="tarjeta-bienvenida">
         <h1>Bienvenidos al Calendario de Auditorías Clientes Alpharma 2026</h1>
-        <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes, gracias a la calidad y seguridad de nuestros productos y servicios.</p>
+        <p>
+            En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes,
+            gracias a la calidad y seguridad de nuestros productos y servicios.
+        </p>
         <button id="btn-comenzar">Comenzar</button>
     </div>
+
+    <div class="logos-inferiores">
+        <img src="{{ url_for('static', filename='img/logo1.png') }}" alt="Logo 1">
+        <img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Logo 2">
+        <img src="{{ url_for('static', filename='img/logo3.png') }}" alt="Logo 3">
+    </div>
+
 </div>
 
 <div id="pantalla-reserva">
-    <!-- tu contenido actual -->
+    <!-- Aquí continúa tu formulario actual -->
 </div>
 
 <script>
-document.getElementById('btn-comenzar').addEventListener('click', function() {
-    document.getElementById('pantalla-bienvenida').style.display = 'none';
-    document.getElementById('pantalla-reserva').style.display = 'block';
+document.getElementById('btn-comenzar').addEventListener('click',function(){
+    document.getElementById('pantalla-bienvenida').style.display='none';
+    document.getElementById('pantalla-reserva').style.display='block';
 });
 </script>
 
