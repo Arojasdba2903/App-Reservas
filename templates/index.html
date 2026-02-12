@@ -7,233 +7,219 @@
 
 <style>
 /* --------------------------------------------------- */
-/* ESTILOS GENERALES                                  */
+/* ESTILOS GENERALES Y FONDO GLOBAL                   */
 /* --------------------------------------------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
     margin: 0;
     color: #333;
-    overflow-x: hidden; /* Evita scroll horizontal */
+    overflow-x: hidden;
+    
+    /* --- AQUÍ SE DEFINE EL FONDO PARA TODAS LAS PANTALLAS --- */
+    /* Si tienes una imagen de fondo real, descomenta la linea de abajo y pon la ruta: */
+    /* background: url('static/img/tu-fondo.jpg') no-repeat center center fixed; */
+    
+    /* Por defecto usaremos el degradado naranja que tenías: */
+    background: linear-gradient(135deg, #ff9a4d, #d26727, #7a3413);
+    
+    background-size: cover; /* Asegura que cubra toda la pantalla */
+    min-height: 100vh;      /* Asegura que llegue hasta abajo */
+    background-attachment: fixed; /* El fondo se queda quieto al hacer scroll */
 }
 
 /* --------------------------------------------------- */
 /* PANTALLA DE BIENVENIDA                             */
 /* --------------------------------------------------- */
 #pantalla-bienvenida {
-    background: linear-gradient(135deg, #ff9a4d, #d26727, #7a3413);
+    /* Quitamos el background de aquí para que se vea el del body */
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
-    position: relative; /* Necesario para posicionar los logos absolutos */
+    position: relative;
 }
 
 .tarjeta-bienvenida {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15); /* Más transparente para ver el fondo */
+    backdrop-filter: blur(10px);           /* Efecto vidrio */
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 50px 40px;
     border-radius: 20px;
     max-width: 800px;
     text-align: center;
     color: white;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     position: relative;
-    z-index: 10; /* Asegura que el texto esté sobre los logos si se cruzan */
+    z-index: 10;
 }
 
 .tarjeta-bienvenida h1 {
-    font-size: 28px;
-    margin-top: 0;
-    margin-bottom: 25px;
+    font-size: 28px; margin-top: 0; margin-bottom: 25px;
     text-shadow: 1px 2px 6px rgba(0,0,0,0.4);
 }
 
 .tarjeta-bienvenida p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 35px;
+    font-size: 16px; line-height: 1.6; margin-bottom: 35px;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
 #btn-comenzar {
     background-color: white;
-    color: #7a3413;
+    color: #d26727;
     padding: 15px 40px;
     font-size: 18px;
     border-radius: 30px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    width: auto;
-    display: inline-block;
-    transition: 0.3s ease;
-    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
 }
 
-#btn-comenzar:hover {
-    background-color: #ffe6d8;
-    color: #d26727;
-    transform: translateY(-3px);
-}
+#btn-comenzar:hover { transform: scale(1.05); }
 
 /* --------------------------------------------------- */
-/* ESTILOS PARA LOS LOGOS (NUEVO)                     */
+/* ESTILOS PARA LOS LOGOS (Inferior Izquierda)        */
 /* --------------------------------------------------- */
 .contenedor-logos {
     position: absolute;
-    bottom: 30px;       /* Distancia desde abajo */
-    left: 30px;         /* Distancia desde la izquierda */
-    display: flex;      /* Alineación horizontal */
-    gap: 20px;          /* Espacio entre logos */
-    z-index: 5;         /* Capa inferior al texto principal */
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    gap: 20px;
+    z-index: 5;
 }
 
 .contenedor-logos img {
-    height: 60px;       /* Altura fija, el ancho se ajusta solo */
+    height: 60px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Sombra suave */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     transition: transform 0.3s ease;
-    background: rgba(255,255,255,0.1); /* Fondo sutil opcional */
-    padding: 5px;
-    border-radius: 8px;
+    background: rgba(255,255,255,0.15); /* Fondo suave tras los logos */
+    padding: 8px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
 }
 
-.contenedor-logos img:hover {
-    transform: scale(1.1); /* Efecto zoom al pasar mouse */
-    background: rgba(255,255,255,0.2);
-}
-
-/* Responsividad para móviles */
-@media (max-width: 600px) {
-    .contenedor-logos {
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%); /* Centrar logos en móviles */
-        width: 100%;
-        justify-content: center;
-    }
-    .contenedor-logos img {
-        height: 40px; /* Logos más pequeños en celular */
-    }
-}
+.contenedor-logos img:hover { transform: scale(1.1); }
 
 /* --------------------------------------------------- */
 /* PANTALLA DE RESERVA (FORMULARIO)                   */
 /* --------------------------------------------------- */
-#pantalla-reserva { padding: 20px; }
+#pantalla-reserva { 
+    padding: 40px 20px; 
+    min-height: 100vh; /* Para centrar verticalmente si se desea */
+    box-sizing: border-box;
+}
 
 .contenedor-principal {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
     gap: 30px;
-    flex-wrap: wrap; /* Para que baje en pantallas chicas */
+    flex-wrap: wrap;
 }
 
-.columna-calendario {
-    flex: 6;
-    background: white;
+/* Estilos compartidos para las columnas (Efecto Tarjeta Blanca) */
+.columna-calendario, .columna-formulario {
+    background: rgba(255, 255, 255, 0.95); /* Blanco casi opaco */
     padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    min-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+    backdrop-filter: blur(5px);
 }
 
+.columna-calendario { flex: 6; min-width: 300px; }
+.columna-formulario { flex: 4; min-width: 300px; }
+
+/* Títulos dentro del formulario */
+h2 { color: #d26727; }
+
+/* Grid del calendario */
 .grid-calendario {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
     margin-top: 20px;
 }
 
 .tarjeta {
-    border: 1px solid #ddd;
+    border: 1px solid #eee;
     border-radius: 8px;
-    overflow: hidden;
     cursor: pointer;
-    transition: all 0.2s;
     text-align: center;
     background: white;
+    transition: 0.2s;
 }
 
 .tarjeta:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(210,103,39,0.3);
+    box-shadow: 0 5px 15px rgba(210,103,39,0.2);
+    border-color: #d26727;
 }
 
 .tarjeta.seleccionada {
     border: 2px solid #d26727;
     background-color: #fff2ea;
+    transform: scale(1.05);
 }
 
 .tarjeta .mes {
     background-color: #d26727;
     color: white;
+    font-size: 12px;
+    padding: 5px 0;
     font-weight: bold;
-    padding: 8px 0;
-    font-size: 14px;
 }
 
 .tarjeta .dia {
-    padding: 20px 0;
-    font-size: 32px;
+    padding: 15px 0;
+    font-size: 28px;
     font-weight: bold;
-    color: #222;
+    color: #333;
 }
 
-.columna-formulario {
-    flex: 4;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    min-width: 300px;
-}
-
+/* Formulario Inputs */
 .grupo-form { margin-bottom: 15px; }
-
-.grupo-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    font-weight: bold;
+.grupo-form label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+.grupo-form input {
+    width: 100%; padding: 12px;
+    border: 1px solid #ccc; border-radius: 8px;
+    box-sizing: border-box; background: #f9f9f9;
 }
+.grupo-form input:focus { border-color: #d26727; outline: none; background: white; }
 
-.grupo-form input,
-.grupo-form select,
-.grupo-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
+/* Botón Confirmar */
 button[type="submit"] {
     background-color: #d26727;
     color: white;
-    padding: 12px;
+    padding: 15px;
     width: 100%;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
+    margin-top: 10px;
+    transition: background 0.3s;
 }
 
 button[type="submit"]:hover { background-color: #a94e1c; }
-button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
+button[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
 
-#mensaje-fecha {
-    color: #d26727;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: block;
+#mensaje-fecha { display: block; margin-bottom: 15px; font-weight: bold; color: #d26727; }
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .contenedor-logos {
+        bottom: 10px; left: 50%; transform: translateX(-50%);
+        width: 100%; justify-content: center;
+    }
+    .contenedor-logos img { height: 40px; }
+    .contenedor-principal { flex-direction: column; }
 }
 </style>
 </head>
@@ -256,8 +242,9 @@ button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
 
 <div id="pantalla-reserva" style="display:none;">
     <div class="contenedor-principal">
+        
         <div class="columna-calendario">
-            <h2 style="color:#d26727;margin-top:0;">Selecciona una fecha</h2>
+            <h2 style="margin-top:0;">Selecciona una fecha</h2>
             <div class="grid-calendario">
                 {% for item in fechas %}
                 <div class="tarjeta" data-fecha="{{ item.fecha }}" onclick="seleccionarFecha(this)">
@@ -269,15 +256,23 @@ button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
         </div>
 
         <div class="columna-formulario">
-            <h2 style="color:#d26727;margin-top:0;">Detalles de la Cita</h2>
-            <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
+            <h2 style="margin-top:0;">Detalles de la Cita</h2>
+            <span id="mensaje-fecha">Selecciona una fecha del calendario</span>
 
             <form id="formulario-reserva">
                 <input type="hidden" id="fechaElegida" required>
-
-                <div class="grupo-form"><label>Nombre Completo *</label><input type="text" id="nombre" required></div>
-                <div class="grupo-form"><label>Correo Electrónico *</label><input type="email" id="correo" required></div>
-                <div class="grupo-form"><label>Teléfono</label><input type="text" id="telefono"></div>
+                <div class="grupo-form">
+                    <label>Nombre Completo *</label>
+                    <input type="text" id="nombre" placeholder="Tu nombre..." required>
+                </div>
+                <div class="grupo-form">
+                    <label>Correo Electrónico *</label>
+                    <input type="email" id="correo" placeholder="ejemplo@correo.com" required>
+                </div>
+                <div class="grupo-form">
+                    <label>Teléfono</label>
+                    <input type="text" id="telefono" placeholder="Opcional">
+                </div>
 
                 <button type="submit" id="btnGuardar" disabled>Confirmar Reserva</button>
             </form>
@@ -286,24 +281,30 @@ button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
 </div>
 
 <script>
-// Lógica para cambiar de pantalla
+// Transición suave entre pantallas
 document.getElementById('btn-comenzar').addEventListener('click', function() {
-    document.getElementById('pantalla-bienvenida').style.display = 'none';
-    document.getElementById('pantalla-reserva').style.display = 'block';
+    const bienvenida = document.getElementById('pantalla-bienvenida');
+    const reserva = document.getElementById('pantalla-reserva');
+    
+    // Efecto de desvanecimiento simple
+    bienvenida.style.opacity = '0';
+    setTimeout(() => {
+        bienvenida.style.display = 'none';
+        reserva.style.display = 'block';
+        reserva.style.opacity = '0';
+        // Pequeña animación de entrada para el formulario
+        setTimeout(() => { reserva.style.transition = 'opacity 0.5s'; reserva.style.opacity = '1'; }, 50);
+    }, 300); // Espera a que termine la transición CSS (si se agregara)
 });
 
+// Configuración de Fechas
 const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-// Lógica para renderizar fechas (procesa lo que viene del servidor)
 document.querySelectorAll('.tarjeta').forEach(tarjeta => {
     const fechaStr = tarjeta.getAttribute('data-fecha');
     if(!fechaStr) return;
-    
-    // Asume formato YYYY-MM-DD
     const partes = fechaStr.split('-');
-    // partes[1] es el mes (01 a 12), restamos 1 para el array
-    const mesIndex = parseInt(partes[1]) - 1; 
-    
+    const mesIndex = parseInt(partes[1]) - 1;
     if(meses[mesIndex]) {
         tarjeta.querySelector('.mes').innerText = meses[mesIndex].toUpperCase();
     }
@@ -311,16 +312,18 @@ document.querySelectorAll('.tarjeta').forEach(tarjeta => {
 });
 
 function seleccionarFecha(elemento){
-    // Quitar selección previa
     document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
-    
-    // Seleccionar actual
     elemento.classList.add('seleccionada');
-    
     const fechaElegida = elemento.getAttribute('data-fecha');
     document.getElementById('fechaElegida').value = fechaElegida;
-    document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-    document.getElementById('btnGuardar').disabled = false;
+    
+    const msg = document.getElementById('mensaje-fecha');
+    msg.innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
+    msg.style.color = '#2ecc71'; // Verde éxito
+    
+    const btn = document.getElementById('btnGuardar');
+    btn.disabled = false;
+    btn.style.cursor = 'pointer';
 }
 </script>
 
