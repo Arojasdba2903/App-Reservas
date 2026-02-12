@@ -1,112 +1,203 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Citas</title>
-    <style>
-        /* Ajuste en el body: quitamos el padding para que el fondo de bienvenida ocupe el 100% */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; color: #333; }
-        
-        /* --------------------------------------------------- */
-        /* NUEVOS ESTILOS: Pantalla de Bienvenida (Paso 1)     */
-        /* --------------------------------------------------- */
-        #pantalla-bienvenida {
-            background: linear-gradient(135deg, #001f3f, #003366, #00a8e8); /* Degradado azul bonito */
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserva de Citas</title>
 
-        .tarjeta-bienvenida {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 50px 40px;
-            border-radius: 15px;
-            max-width: 800px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    color: #333;
+}
 
-        .tarjeta-bienvenida h1 {
-            font-size: 28px;
-            margin-top: 0;
-            margin-bottom: 25px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
-        }
+/* --------------------------------------------------- */
+/* PANTALLA DE BIENVENIDA CON NUEVO DEGRADADO         */
+/* --------------------------------------------------- */
+#pantalla-bienvenida {
+    background: linear-gradient(135deg, #ff9a4d, #d26727, #7a3413);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .tarjeta-bienvenida p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 35px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
+.tarjeta-bienvenida {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 50px 40px;
+    border-radius: 20px;
+    max-width: 800px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
 
-        #btn-comenzar {
-            background-color: white;
-            color: #003366;
-            padding: 15px 40px;
-            font-size: 18px;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            width: auto;
-            display: inline-block;
-        }
+.tarjeta-bienvenida h1 {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 1px 2px 6px rgba(0,0,0,0.4);
+}
 
-        #btn-comenzar:hover {
-            background-color: #e6f0fa;
-            color: #001f3f;
-            transform: translateY(-2px);
-        }
+.tarjeta-bienvenida p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
 
-        /* --------------------------------------------------- */
-        /* ESTILOS ORIGINALES: Formulario (Paso 2)             */
-        /* --------------------------------------------------- */
-        #pantalla-reserva { padding: 20px; } /* El padding que estaba en el body */
-        
-        .contenedor-principal { display: flex; max-width: 1200px; margin: 0 auto; gap: 30px; }
-        
-        /* Columna Izquierda: Calendario */
-        .columna-calendario { flex: 6; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .grid-calendario { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-        
-        /* Diseño de la Tarjeta de Fecha */
-        .tarjeta { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
-        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,51,102,0.2); }
-        .tarjeta.seleccionada { border: 2px solid #003366; background-color: #e6f0fa; }
-        .tarjeta .mes { background-color: #003366; color: white; font-weight: bold; padding: 8px 0; font-size: 14px; }
-        .tarjeta .dia { padding: 20px 0; font-size: 32px; font-weight: bold; color: #222; }
-        
-        /* Columna Derecha: Formulario */
-        .columna-formulario { flex: 4; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .grupo-form { margin-bottom: 15px; }
-        .grupo-form label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold; }
-        .grupo-form input, .grupo-form select, .grupo-form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { background-color: #003366; color: white; padding: 12px; width: 100%; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:hover { background-color: #002244; }
-        button:disabled { background-color: #aaa; cursor: not-allowed; }
-        #mensaje-fecha { color: #003366; font-weight: bold; margin-bottom: 20px; display: block; }
-    </style>
+#btn-comenzar {
+    background-color: white;
+    color: #7a3413;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    width: auto;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+#btn-comenzar:hover {
+    background-color: #ffe6d8;
+    color: #d26727;
+    transform: translateY(-3px);
+}
+
+/* --------------------------------------------------- */
+/* FORMULARIO                                         */
+/* --------------------------------------------------- */
+#pantalla-reserva { padding: 20px; }
+
+.contenedor-principal {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.columna-calendario {
+    flex: 6;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.grid-calendario {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.tarjeta {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    background: white;
+}
+
+.tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(210,103,39,0.3);
+}
+
+.tarjeta.seleccionada {
+    border: 2px solid #d26727;
+    background-color: #fff2ea;
+}
+
+.tarjeta .mes {
+    background-color: #d26727;
+    color: white;
+    font-weight: bold;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.tarjeta .dia {
+    padding: 20px 0;
+    font-size: 32px;
+    font-weight: bold;
+    color: #222;
+}
+
+.columna-formulario {
+    flex: 4;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.grupo-form { margin-bottom: 15px; }
+
+.grupo-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.grupo-form input,
+.grupo-form select,
+.grupo-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #d26727;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover { background-color: #a94e1c; }
+button:disabled { background-color: #aaa; cursor: not-allowed; }
+
+#mensaje-fecha {
+    color: #d26727;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+}
+</style>
 </head>
+
 <body>
 
 <div id="pantalla-bienvenida">
     <div class="tarjeta-bienvenida">
         <h1>Bienvenidos al Calendario de Auditorias Clientes Alpharma 2026</h1>
-        <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes, gracias a la calidad y seguridad de nuestros productos y servicios. Nuestra certificación en ISO 9001 e ISO 14001, junto con el reconocimiento ambiental distrital PREAD en la categoría Élite, reflejan nuestro compromiso con la excelencia, la sostenibilidad y la mejora continua. Estos logros nos diferencian en el mercado, generando confianza y valor para quienes más lo necesitan.</p>
+        <p>En AL PHARMA S.A.S somos sinónimo de esperanza de vida para nuestros pacientes...</p>
         <button id="btn-comenzar">Comenzar</button>
     </div>
 </div>
 
-<div id="pantalla-reserva" style="display: none;">
+<div id="pantalla-reserva" style="display:none;">
     <div class="contenedor-principal">
         <div class="columna-calendario">
-            <h2 style="color: #003366; margin-top: 0;">Selecciona una fecha</h2>
+            <h2 style="color:#d26727;margin-top:0;">Selecciona una fecha</h2>
             <div class="grid-calendario">
                 {% for item in fechas %}
                 <div class="tarjeta" data-fecha="{{ item.fecha }}" onclick="seleccionarFecha(this)">
@@ -118,29 +209,15 @@
         </div>
 
         <div class="columna-formulario">
-            <h2 style="color: #003366; margin-top: 0;">Detalles de la Cita</h2>
+            <h2 style="color:#d26727;margin-top:0;">Detalles de la Cita</h2>
             <span id="mensaje-fecha">No has seleccionado ninguna fecha</span>
-            
+
             <form id="formulario-reserva">
                 <input type="hidden" id="fechaElegida" required>
 
                 <div class="grupo-form"><label>Nombre Completo *</label><input type="text" id="nombre" required></div>
                 <div class="grupo-form"><label>Correo Electrónico *</label><input type="email" id="correo" required></div>
                 <div class="grupo-form"><label>Teléfono</label><input type="text" id="telefono"></div>
-                
-                <div style="display: flex; gap: 10px;">
-                    <div class="grupo-form" style="flex: 1;">
-                        <label>Modalidad *</label>
-                        <select id="modalidad" required><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option></select>
-                    </div>
-                    <div class="grupo-form" style="flex: 1;">
-                        <label>Servicio *</label>
-                        <select id="servicio" required><option value="Comercial">Comercial</option><option value="CM">CM</option><option value="SICM">SICM</option></select>
-                    </div>
-                </div>
-
-                <div class="grupo-form"><label>Cargo</label><input type="text" id="cargo"></div>
-                <div class="grupo-form"><label>Comentarios</label><textarea id="notas" rows="3"></textarea></div>
 
                 <button type="submit" id="btnGuardar" disabled>Confirmar Reserva</button>
             </form>
@@ -149,76 +226,30 @@
 </div>
 
 <script>
-    // -----------------------------------------------------------------
-    // NUEVA LÓGICA: Transición del Paso 1 al Paso 2
-    // -----------------------------------------------------------------
-    document.getElementById('btn-comenzar').addEventListener('click', function() {
-        // Ocultar la pantalla de bienvenida
-        document.getElementById('pantalla-bienvenida').style.display = 'none';
-        // Mostrar la pantalla de reserva
-        document.getElementById('pantalla-reserva').style.display = 'block';
-    });
+document.getElementById('btn-comenzar').addEventListener('click', function() {
+    document.getElementById('pantalla-bienvenida').style.display = 'none';
+    document.getElementById('pantalla-reserva').style.display = 'block';
+});
 
-    // -----------------------------------------------------------------
-    // LÓGICA ORIGINAL (Intacta)
-    // -----------------------------------------------------------------
-    // 1. Darle formato bonito a las fechas al cargar la página
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    
-    document.querySelectorAll('.tarjeta').forEach(tarjeta => {
-        const fechaStr = tarjeta.getAttribute('data-fecha');
-        const partes = fechaStr.split('-'); // [AÑO, MES, DIA]
-        const mesIndex = parseInt(partes[1]) - 1;
-        
-        tarjeta.querySelector('.mes').innerText = meses[mesIndex].toUpperCase();
-        tarjeta.querySelector('.dia').innerText = partes[2];
-    });
+const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-    // 2. Lógica al hacer clic en una fecha
-    function seleccionarFecha(elemento) {
-        // Quitar selección a las demás
-        document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
-        // Seleccionar la actual
-        elemento.classList.add('seleccionada');
-        
-        const fechaElegida = elemento.getAttribute('data-fecha');
-        document.getElementById('fechaElegida').value = fechaElegida;
-        document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
-        document.getElementById('btnGuardar').disabled = false;
-    }
+document.querySelectorAll('.tarjeta').forEach(tarjeta => {
+    const fechaStr = tarjeta.getAttribute('data-fecha');
+    if(!fechaStr) return;
+    const partes = fechaStr.split('-');
+    const mesIndex = parseInt(partes[1]) - 1;
+    tarjeta.querySelector('.mes').innerText = meses[mesIndex].toUpperCase();
+    tarjeta.querySelector('.dia').innerText = partes[2];
+});
 
-    // 3. Enviar los datos a Python al guardar
-    document.getElementById('formulario-reserva').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('btnGuardar');
-        btn.innerText = "Guardando..."; btn.disabled = true;
-
-        const datos = {
-            fecha: document.getElementById('fechaElegida').value,
-            nombre: document.getElementById('nombre').value,
-            correo: document.getElementById('correo').value,
-            telefono: document.getElementById('telefono').value,
-            modalidad: document.getElementById('modalidad').value,
-            servicio: document.getElementById('servicio').value,
-            cargo: document.getElementById('cargo').value,
-            notas: document.getElementById('notas').value
-        };
-
-        const respuesta = await fetch('/reservar', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(datos)
-        });
-
-        const resultado = await respuesta.json();
-        if(resultado.status === 'success'){
-            alert("¡Reserva confirmada exitosamente!");
-            window.location.reload(); // Recargar la página (la fecha desaparecerá)
-        } else {
-            alert("Error: " + resultado.mensaje);
-            btn.innerText = "Confirmar Reserva"; btn.disabled = false;
-        }
-    });
+function seleccionarFecha(elemento){
+    document.querySelectorAll('.tarjeta').forEach(t => t.classList.remove('seleccionada'));
+    elemento.classList.add('seleccionada');
+    const fechaElegida = elemento.getAttribute('data-fecha');
+    document.getElementById('fechaElegida').value = fechaElegida;
+    document.getElementById('mensaje-fecha').innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
+    document.getElementById('btnGuardar').disabled = false;
+}
 </script>
 
 </body>
