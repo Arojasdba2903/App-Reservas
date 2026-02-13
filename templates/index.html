@@ -6,7 +6,7 @@
     <title>Reserva de Citas - Alpharma</title>
     <style>
         /* --------------------------------------------------- */
-        /* ESTILOS GENERALES Y FONDO DE IMAGEN                */
+        /* ESTILOS GENERALES Y FONDO DE IMAGEN                 */
         /* --------------------------------------------------- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -272,6 +272,11 @@
                     <label>Cargo</label>
                     <input type="text" id="cargo">
                 </div>
+
+                <div class="grupo-form">
+                    <label>Nombre del Cliente *</label>
+                    <input type="text" id="nombreCliente" required>
+                </div>
                 <div class="grupo-form">
                     <label>Comentarios</label>
                     <textarea id="notas" rows="3"></textarea>
@@ -311,8 +316,8 @@
         document.getElementById('fechaElegida').value = fechaElegida;
         
         const msg = document.getElementById('mensaje-fecha');
-        // Corregido: Agregué las comillas invertidas para el template string
-        msg.innerText = `✅ Fecha seleccionada: ${fechaElegida}`;
+        // MODIFICADO: Agrega el texto del horario al mensaje
+        msg.innerText = `✅ Fecha seleccionada: ${fechaElegida} - De 8am-12pm`;
         msg.style.color = '#76ff03'; 
         
         document.getElementById('btnGuardar').disabled = false;
@@ -331,6 +336,8 @@
             modalidad: document.getElementById('modalidad').value,
             servicio: document.getElementById('servicio').value,
             cargo: document.getElementById('cargo').value,
+            // MODIFICADO: Captura el valor del nuevo campo
+            nombreCliente: document.getElementById('nombreCliente').value, 
             notas: document.getElementById('notas').value
         };
 
