@@ -15,7 +15,7 @@ key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 # URL de tu flujo de Power Automate (Asegúrate de que sea la del disparador HTTP)
-TEAMS_WEBHOOK_URL = "https://default51d73d7c33864091abf09f53c878c6.d5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/6e4e76f7ce9b43a3b931c0576160376f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Yfz5As0okOdm6xtVlTSQ5DqGJ1CYKlIOMQqKPS56_kc"
+TEAMS_WEBHOOK_URL = "https://default51d73d7c33864091abf09f53c878c6.d5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/12bfd29612564b91bf1949d8ca362288/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rDK5jmfkMwT0zQooN8tV-ar2RcaEtZPhuIXI3F0MGiU"
 
 def enviar_alerta_teams(datos):
     """
@@ -71,3 +71,4 @@ def reservar():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
