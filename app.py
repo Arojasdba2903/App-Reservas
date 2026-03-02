@@ -54,6 +54,7 @@ def reservar():
             "modalidad": datos["modalidad"],
             "servicio": datos["servicio"],
             "cargo": datos.get("cargo", ""),
+            "nombre_cliente": datos.get("nombreCliente", ""),  # <-- AQUÍ AGREGAMOS EL NUEVO CAMPO
             "notas": datos.get("notas", ""),
             "fecha_reserva": datos["fecha"]
         }).execute()
@@ -71,4 +72,3 @@ def reservar():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
